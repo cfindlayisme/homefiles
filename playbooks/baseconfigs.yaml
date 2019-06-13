@@ -1,0 +1,34 @@
+- hosts: all
+  user: root
+
+  vars_files:
+    - ~/playbooks/baseconfigs.vars.yaml
+
+  tasks:
+    - name: sshd configuration file update
+      template: src=~/configs/ssh/sshd_config.j2
+        dest=/etc/ssh/sshd_config
+        backup=yes
+        owner=0 group=0 mode=0644
+        validate='/usr/sbin/sshd -T -f %s'
+      notify:
+        - restart sshd
+
+    - name: create root ssh key directory
+      action: file path=/root/.ssh state=directory
+        owner=0 group=0 mode=0755
+
+    - name: upload root user authorized_keys
+      action: copy src=~/configs/ssh/authorized_keys
+        dest=/root/.ssh/authorized_keys
+        owner=0 group=0 mode=644
+
+    - name: upload root .bashrc file
+      template: src=~/configs/bash/rootbashrc.j2
+        dest=/root/.bashrc
+        backup=yes
+        owner=0 group=0 mode=0644
+
+  handlers:
+    - name: restart sshd
+      service: name=sshd state=restarted
