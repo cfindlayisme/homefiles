@@ -1,0 +1,26 @@
+- hosts: webservers
+  user: root
+
+  vars_files:
+    - ~/playbooks/www-servers.yaml.vars
+
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=86400
+
+    - name: Install required programs
+      apt: name={{ item }} state=latest
+      with_items:
+        - nginx
+
+    - name: Allow SSH on port 80/tcp
+      ufw:
+          rule: allow
+          port: 80
+          proto: tcp
+
+    - name: Allow SSH on port 443/tcp
+      ufw:
+          rule: allow
+          port: 443
+          proto: tcp
