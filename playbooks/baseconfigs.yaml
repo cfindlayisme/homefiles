@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: general webservers dbservers mailservers gameservers
   user: root
 
   vars_files:
@@ -9,8 +9,10 @@
       apt: update_cache=yes cache_valid_time=86400
 
     - name: Install required programs
-      apt: 
-        name: ufw
+        apt: name={{ item }} state=latest
+        with_items:
+          ufw
+          rsync
 
     - name: Enable firewall
       ufw:
