@@ -9,10 +9,10 @@
       apt: update_cache=yes cache_valid_time=86400
 
     - name: Install required programs
-        apt: name={{ item }} state=latest
-        with_items:
-          ufw
-          rsync
+      apt: name={{ item }} state=latest
+      with_items:
+        - ufw
+        - rsync
 
     - name: Enable firewall
       ufw:
