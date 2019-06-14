@@ -1,0 +1,183 @@
+inet_protocols = ipv4, ipv6
+
+# Don't advertise we are postfix
+smtpd_banner = $myhostname ESMTP
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+readme_directory = /usr/share/doc/postfix
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem
+# For the client side too
+smtp_tls_cert_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+smtp_tls_key_file=/etc/letsencrypt/live/{{ ansible_fqdn }}privkey.pem
+smtp_tls_CAfile=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+
+# For more info
+smtpd_tls_loglevel = 1
+
+# To avoid logjam attacks
+smtpd_tls_dh1024_param_file = ${config_directory}/dh2048.pem
+smtpd_tls_dh512_param_file = ${config_directory}/dh512.pem
+
+# Use TLS in the first place
+smtpd_use_tls=yes
+
+# If we can, use it
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+
+# No old SSL
+smtpd_tls_protocols = {{ postfix_tlsversions }}
+smtp_tls_protocols = {{ postfix_tlsversions }}
+smtpd_tls_mandatory_protocols = {{ postfix_tlsversions }}
+smtp_tls_mandatory_protocols = {{ postfix_tlsversions }}
+
+smtpd_tls_mandatory_ciphers = high
+smtp_tls_mandatory_ciphers = high
+
+tls_ssl_options = NO_COMPRESSION
+
+# CIPHERS #
+# These are insecure ciphers, so we disable them
+smtpd_tls_exclude_ciphers = aNULL, MD5 , DES, ADH, RC4, PSD, SRP, 3DES, eNULL
+smtp_tls_exclude_ciphers = aNULL, MD5 , DES, ADH, RC4, PSD, SRP, 3DES, eNULL
+tls_high_cipherlist = {{ postfix_tlsciphers }}
+tls_medium_cipherlist = {{ postfix_tlsciphers }}
+smtpd_tls_eecdh_grade = strong
+# END CIPHERS #
+
+# Not implemented yet in postfix till 3.2.0
+#tls_eecdh_auto_curves = X25519:P-256:P-384:P-521
+
+# Use server ciphers first
+tls_preempt_cipherlist = yes
+
+# Some places we like to verify the SSL cert is valid
+smtp_tls_policy_maps = hash:/etc/postfix/conf.d/tls_policy
+smtp_tls_CApath = /etc/ssl/certs/
+smtpd_tls_CApath = /etc/ssl/certs/
+
+# Ask for client certs for header purposes, but we don't require them
+smtpd_tls_ask_ccert = yes 
+smtpd_tls_req_ccert = no
+
+# Misc TLS
+smtpd_tls_received_header = yes
+#smtpd_tls_auth_only = yes
+tls_random_source = dev:/dev/urandom
+smtp_tls_loglevel = 1
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+
+#Anti spam stuff
+smtpd_helo_required = yes
+disable_vrfy_command = yes
+strict_rfc821_envelopes = yes
+
+# Tar pitting & rates
+smtpd_error_sleep_time = 20s
+smtpd_soft_error_limit = 1
+smtpd_hard_error_limit = 3
+smtpd_junk_command_limit = 2
+smtpd_delay_reject = yes
+smtpd_client_connection_count_limit = 10
+smtpd_client_connection_rate_limit = 60
+
+smtpd_recipient_restrictions =
+        permit_sasl_authenticated,
+        check_helo_access hash:/etc/postfix/conf.d/helo_access,
+        # Has blacklisted senders/domains in it
+        check_sender_access hash:/etc/postfix/conf.d/sender_access,
+        # Some stuff to be strict about	
+        reject_invalid_hostname,
+        reject_unknown_recipient_domain,
+        reject_non_fqdn_helo_hostname,
+        reject_invalid_helo_hostname,
+        reject_unauth_pipelining,
+        permit_mynetworks,
+        reject_unauth_destination,
+        # Rejects domains under 5 days old
+        reject_rhsbl_sender  fresh.spameatingmonkey.net,
+        reject_rhsbl_client  fresh.spameatingmonkey.net,
+        check_policy_service unix:private/policy-spf
+        permit
+
+postscreen_access_list = permit_mynetworks, cidr:/etc/postfix/conf.d/postscreen_access.cidr
+
+postscreen_dnsbl_sites =
+        zen.spamhaus.org*3
+        bl.mailspike.net*2
+        b.barracudacentral.org*2
+        bl.spameatingmonkey.net
+        bl.spamcop.net
+        psbl.surriel.com
+        swl.spamhaus.org*-4
+        list.dnswl.org=127.0.[2..15].0*-2
+        list.dnswl.org=127.0.[2..15].1*-3
+        list.dnswl.org=127.0.[2..15].[2..3]*-4
+        wl.mailspike.net=127.0.0.[17;18]*-1
+        wl.mailspike.net=127.0.0.[19;20]*-2
+
+# Postscreen Deep Protocol Tests
+postscreen_pipelining_enable = yes
+postscreen_pipelining_action = enforce
+postscreen_non_smtp_command_enable = yes
+postscreen_non_smtp_command_action = drop
+postscreen_bare_newline_enable = yes
+postscreen_bare_newline_action = ignore
+postscreen_greet_banner = Are you going to speak to me in a cockney accent?
+
+postscreen_blacklist_action = drop
+postscreen_dnsbl_action = enforce
+postscreen_greet_action = enforce
+postscreen_dnsbl_threshold = 3
+postscreen_dnsbl_whitelist_threshold = -1
+postscreen_helo_required = $smtpd_helo_required
+postscreen_tls_security_level = $smtpd_tls_security_level 
+postscreen_use_tls = $smtpd_use_tls 
+postscreen_client_connection_count_limit = $smtpd_client_connection_count_limit
+
+# For SPF policy checking
+policy-spf_time_limit = 3600s
+
+# DKIM
+# --------------------------------------
+milter_default_action = accept
+milter_protocol = 2
+smtpd_milters = inet:127.0.0.1:8891
+non_smtpd_milters = inet:127.0.0.1:8891
+
+myhostname = {{ ansible_fqdn }}
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination = localhost
+relayhost =
+
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 {{ postfix_mynetworks }}
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+
+#Enabling SMTP for authenticated users, and handing off authentication to Dovecot
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+
+# Clamav scan stuff
+content_filter = scan:127.0.0.1:10026
+
+#Handing off local delivery to Dovecot's LMTP, and telling it where to store mail
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+#Virtual domains, users, and aliases
+virtual_mailbox_domains = mysql:/etc/postfix/conf.d/mysql-virtual-mailbox-domains.cf
+virtual_mailbox_maps = mysql:/etc/postfix/conf.d/mysql-virtual-mailbox-maps.cf
+virtual_alias_maps = mysql:/etc/postfix/conf.d/mysql-virtual-alias-maps.cf
+relay_domains = mysql:/etc/postfix/conf.d/mysql-virtual-relay-domains.cf
+html_directory = /usr/share/doc/postfix/html
+compatibility_level = 2
