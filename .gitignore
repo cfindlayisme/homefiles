@@ -1,4 +1,4 @@
 *.swp
 *.swo
 configs/ssh/authorized_keys
-playbooks/baseconfigs.yaml.vars
+playbooks/*.vars
