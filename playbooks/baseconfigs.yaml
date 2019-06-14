@@ -13,6 +13,7 @@
       with_items:
         - ufw
         - rsync
+        - fail2ban
 
     - name: Enable firewall
       ufw:
