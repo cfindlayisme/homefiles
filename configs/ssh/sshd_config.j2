@@ -9,7 +9,7 @@ UsePrivilegeSeparation yes
 SyslogFacility AUTH
 LogLevel VERBOSE
 LoginGraceTime 120
-PermitRootLogin yes
+PermitRootLogin without-password
 StrictModes yes
 AllowUsers root {{ ssh_users }}
 PubkeyAuthentication yes
