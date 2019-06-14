@@ -2,10 +2,27 @@
   user: root
 
   vars_files:
-    - ~/playbooks/baseconfigs.vars.yaml
+    - ~/playbooks/baseconfigs.yaml.vars
 
   tasks:
-    - name: sshd configuration file update
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=86400
+
+    - name: Install required programs
+      apt: 
+        name: ufw
+
+    - name: Enable firewall
+      ufw:
+        state: enabled
+
+    - name: Allow SSH on port 22/tcp
+      ufw:
+          rule: allow
+          port: 22
+          proto: tcp
+
+    - name: Install /etc/ssh/sshd_config
       template: src=~/configs/ssh/sshd_config.j2
         dest=/etc/ssh/sshd_config
         backup=yes
@@ -14,16 +31,16 @@
       notify:
         - restart sshd
 
-    - name: create root ssh key directory
+    - name: Create /root/.ssh
       action: file path=/root/.ssh state=directory
         owner=0 group=0 mode=0755
 
-    - name: upload root user authorized_keys
+    - name: Upload /root/.ssh/authorized_keys
       action: copy src=~/configs/ssh/authorized_keys
         dest=/root/.ssh/authorized_keys
         owner=0 group=0 mode=644
 
-    - name: upload root .bashrc file
+    - name: Upload /root/.bashrc
       template: src=~/configs/bash/rootbashrc.j2
         dest=/root/.bashrc
         backup=yes
