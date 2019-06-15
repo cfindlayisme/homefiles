@@ -1,4 +1,6 @@
 *.swp
 *.swo
-configs/ssh/authorized_keys
+playbooks/configs/root/.ssh/authorized_keys
+playbooks/configs/etc/monit/conf.d/alert-preferences.conf
+playbooks/configs/etc/monit/conf.d/http-preferences.conf
 playbooks/*.vars
