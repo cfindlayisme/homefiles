@@ -1,4 +1,4 @@
-- hosts: general webservers dbservers mailservers gameservers
+- hosts: all
   user: root
 
   vars_files:
@@ -19,12 +19,14 @@
     - name: Enable firewall
       ufw:
         state: enabled
+      when: no_ufw_hosts not in inventory_hostname
 
     - name: Allow SSH on port 22/tcp
       ufw:
           rule: allow
           port: 22
           proto: tcp
+      when: no_ufw_hosts not in inventory_hostname
 
     - name: Install /etc/ssh/sshd_config
       template: src=configs/etc/ssh/sshd_config.j2
