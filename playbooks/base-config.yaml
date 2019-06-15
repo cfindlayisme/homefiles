@@ -15,6 +15,7 @@
         - rsync
         - fail2ban
         - monit
+        - unattended-upgrades
 
     - name: Enable firewall
       ufw:
