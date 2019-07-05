@@ -1,3 +1,9 @@
+# Sets up a solid postfix/dovecot/spamassassin/clamav configuration backed by MySQL
+# Designed for one server. Relays should be configured seperately.
+# 
+# Not yet usable
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
 - hosts: mailservers
   user: root
 

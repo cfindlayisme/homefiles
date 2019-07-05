@@ -1,3 +1,7 @@
+# Provides a solid base configuration for Debian servers
+# 
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
 - hosts: all
   user: root
 
