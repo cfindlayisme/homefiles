@@ -13,13 +13,13 @@
       with_items:
         - nginx
 
-    - name: Allow SSH on port 80/tcp
+    - name: Allow HTTP on port 80/tcp
       ufw:
           rule: allow
           port: 80
           proto: tcp
 
-    - name: Allow SSH on port 443/tcp
+    - name: Allow HTTPS on port 443/tcp
       ufw:
           rule: allow
           port: 443
