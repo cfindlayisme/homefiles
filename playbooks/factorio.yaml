@@ -1,0 +1,10 @@
+# Builds a factorio server after the base configuration of the server has been installed.
+# 
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+- hosts: factorio
+  user: root
+
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=86400

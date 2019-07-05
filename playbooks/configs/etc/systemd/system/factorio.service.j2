@@ -1,0 +1,14 @@
+[Unit]
+Description=FactorioServer
+After=network.target
+[Service]
+WorkingDirectory=/srv/factorio
+User=factorio
+Group=factorio
+Type=simple
+ExecStart=/srv/factorio/current/bin/x64/factorio --server-settings /srv/factorio/server-settings.json --start-server /srv/factorio/world.zip
+RestartSec=15
+Restart=always
+KillSignal=SIGINT
+[Install]
+WantedBy=multi-user.target
