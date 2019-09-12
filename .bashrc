@@ -4,6 +4,9 @@
 
 export PATH=~bin:$PATH
 
+# Makes GPG work properly for things like git on Android termux
+export GPG_TTY=$(tty)
+
 # Set SSH to use gpg-agent
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
