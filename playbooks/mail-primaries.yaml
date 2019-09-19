@@ -8,7 +8,7 @@
   user: root
 
   vars_files:
-    - ~/playbooks/mail-primaries.yaml.vars
+    - mail-primaries.yaml.vars
 
   tasks:
     - name: Update apt cache
@@ -20,21 +20,26 @@
         - postfix
         - postfix-policyd-spf-perl
         - opendkim
-        - dovecot
+        - dovecot-mysql
+        - dovecot-sieve
+        - dovecot-lmtpd
+        - dovecot-imapd
+        - dovecot-pop3d
+        - dovecot-sieve
 
     - name: Copy /etc/mailname
-      action: copy src=~/configs/postfix/mailname.j2
+      action: copy src=configs/etc/postfix/mailname.j2
         dest=/etc/postfix/conf.d/mailname.j2
         owner=0 group=0 mode=644
 
     - name: Copy /etc/postfix/main.cf
-      template: src=~/configs/postfix/main.cf.j2
+      template: src=configs/etc/postfix/main.cf.j2
         dest=/etc/postfix/main.cf
         backup=yes
         owner=0 group=0 mode=0644
 
     - name: Copy /etc/postfix/master.cf
-      template: src=~/configs/postfix/master.cf.j2
+      template: src=configs/etc/postfix/master.cf.j2
         dest=/etc/postfix/master.cf
         backup=yes
         owner=0 group=0 mode=0644
@@ -44,17 +49,17 @@
         owner=0 group=0 mode=0755
 
     - name: Copy /etc/postfix/conf.d/helo_access
-      action: copy src=~/configs/postfix/conf.d/helo_access
+      action: copy src=configs/etc/postfix/conf.d/helo_access
         dest=/etc/postfix/conf.d/helo_access
         owner=0 group=0 mode=644
 
     - name: Copy /etc/postfix/conf.d/sender_access
-      action: copy src=~/configs/postfix/conf.d/sender_access
+      action: copy src=configs/etc/postfix/conf.d/sender_access
         dest=/etc/postfix/conf.d/sender_access
         owner=0 group=0 mode=644
 
     - name: Copy /etc/postfix/conf.d/tls_policy
-      action: copy src=~/configs/postfix/conf.d/tls_policy
+      action: copy src=configs/etc/postfix/conf.d/tls_policy
         dest=/etc/postfix/conf.d/tls_policy
         owner=0 group=0 mode=644
 

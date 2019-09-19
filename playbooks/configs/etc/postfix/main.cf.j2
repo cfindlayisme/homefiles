@@ -14,7 +14,7 @@ smtpd_tls_cert_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
 smtpd_tls_key_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem
 # For the client side too
 smtp_tls_cert_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
-smtp_tls_key_file=/etc/letsencrypt/live/{{ ansible_fqdn }}privkey.pem
+smtp_tls_key_file=/etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem
 smtp_tls_CAfile=/etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
 
 # For more info
