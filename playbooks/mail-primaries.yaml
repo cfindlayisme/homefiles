@@ -28,9 +28,10 @@
         - dovecot-sieve
 
     - name: Copy /etc/mailname
-      action: copy src=configs/etc/postfix/mailname.j2
-        dest=/etc/postfix/conf.d/mailname.j2
-        owner=0 group=0 mode=644
+      template: src=configs/etc/mailname.j2
+        dest=/etc/mailname
+        backup=yes
+        owner=0 group=0 mode=0644
 
     - name: Copy /etc/postfix/main.cf
       template: src=configs/etc/postfix/main.cf.j2
