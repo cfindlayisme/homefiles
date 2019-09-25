@@ -1,4 +1,4 @@
-# Generates a CSV file with all full usernames & their password expiry date of of Active Directory
+# Generates a CSV file with all user full names & their password expiry date in Active Directory
 # Change line with Export-csv to proper location for report to go
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
