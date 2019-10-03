@@ -28,6 +28,18 @@
         - dovecot-pop3d
         - dovecot-sieve
 
+    - name: Allow SMTP on port 25/tcp
+      ufw:
+          rule: allow
+          port: 25
+          proto: tcp
+
+    - name: Allow SMTP Submision on port 587/tcp
+      ufw:
+          rule: allow
+          port: 587
+          proto: tcp
+
     - name: Copy /etc/mailname
       template: src=configs/etc/mailname.j2
         dest=/etc/mailname
