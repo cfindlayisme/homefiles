@@ -32,18 +32,24 @@
         dest=/etc/mailname
         backup=yes
         owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
 
     - name: Copy /etc/postfix/main.cf
       template: src=configs/etc/postfix/main.cf.j2
         dest=/etc/postfix/main.cf
         backup=yes
         owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
 
     - name: Copy /etc/postfix/master.cf
       template: src=configs/etc/postfix/master.cf.j2
         dest=/etc/postfix/master.cf
         backup=yes
         owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
 
     - name: Create /etc/postfix/conf.d directory
       action: file path=/etc/postfix/conf.d state=directory
