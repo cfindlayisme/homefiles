@@ -89,6 +89,15 @@
       notify:
         - postmap tls_policy
 
+    # TODO: 0644 mode is a little too open. Should verify it can be more restricted
+    - name: Copy /etc/postfix/conf.d/relay_passwords
+      template: src=configs/etc/postfix/conf.d/relay_passwords.j2
+        dest=/etc/postfix/conf.d/relay_passwords
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - postmap relay_passwords
+
     - name: Copy /etc/postfix/conf.d/mysql-virtual-alias-maps.cf
       template: src=configs/etc/postfix/conf.d/mysql-virtual-alias-maps.cf.j2
         dest=/etc/postfix/conf.d/mysql-virtual-alias-maps.cf
@@ -133,3 +142,6 @@
 
     - name: postmap tls_policy
       command: /usr/sbin/postmap /etc/postfix/conf.d/tls_policy
+
+    - name: postmap relay_passwords
+      command: /usr/sbin/postmap /etc/postfix/conf.d/relay_passwords
