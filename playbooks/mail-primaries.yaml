@@ -72,16 +72,22 @@
       action: copy src=configs/etc/postfix/conf.d/helo_access
         dest=/etc/postfix/conf.d/helo_access
         owner=0 group=0 mode=644
+      notify:
+        - postmap helo_access
 
     - name: Copy /etc/postfix/conf.d/sender_access
       action: copy src=configs/etc/postfix/conf.d/sender_access
         dest=/etc/postfix/conf.d/sender_access
         owner=0 group=0 mode=644
+      notify:
+        - postmap sender_access
 
     - name: Copy /etc/postfix/conf.d/tls_policy
       action: copy src=configs/etc/postfix/conf.d/tls_policy
         dest=/etc/postfix/conf.d/tls_policy
         owner=0 group=0 mode=644
+      notify:
+        - postmap tls_policy
 
     - name: Copy /etc/postfix/conf.d/mysql-virtual-alias-maps.cf
       template: src=configs/etc/postfix/conf.d/mysql-virtual-alias-maps.cf.j2
@@ -118,3 +124,12 @@
   handlers:
     - name: restart postfix
       service: name=postfix state=restarted
+
+    - name: postmap helo_access
+      command: /usr/sbin/postmap /etc/postfix/conf.d/helo_access
+
+    - name: postmap sender_access
+      command: /usr/sbin/postmap /etc/postfix/conf.d/sender_access
+
+    - name: postmap tls_policy
+      command: /usr/sbin/postmap /etc/postfix/conf.d/tls_policy
