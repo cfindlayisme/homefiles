@@ -71,6 +71,38 @@
         dest=/etc/postfix/conf.d/tls_policy
         owner=0 group=0 mode=644
 
+    - name: Copy /etc/postfix/conf.d/mysql-virtual-alias-maps.cf
+      template: src=configs/etc/postfix/conf.d/mysql-virtual-alias-maps.cf.j2
+        dest=/etc/postfix/conf.d/mysql-virtual-alias-maps.cf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
+
+    - name: Copy /etc/postfix/conf.d/mysql-virtual-mailbox-domains.cf
+      template: src=configs/etc/postfix/conf.d/mysql-virtual-mailbox-domains.cf.j2
+        dest=/etc/postfix/conf.d/mysql-virtual-mailbox-domains.cf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
+
+    - name: Copy /etc/postfix/conf.d/mysql-virtual-mailbox-maps.cf
+      template: src=configs/etc/postfix/conf.d/mysql-virtual-mailbox-maps.cf.j2
+        dest=/etc/postfix/conf.d/mysql-virtual-mailbox-maps.cf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
+
+    - name: Copy /etc/postfix/conf.d/mysql-virtual-relay-domains.cf
+      template: src=configs/etc/postfix/conf.d/mysql-virtual-relay-domains.cf.j2
+        dest=/etc/postfix/conf.d/mysql-virtual-relay-domains.cf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart postfix
+
   handlers:
     - name: restart postfix
       service: name=postfix state=restarted
