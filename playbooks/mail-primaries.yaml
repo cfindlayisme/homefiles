@@ -31,7 +31,7 @@
     - name: Copy /etc/mailname
       template: src=configs/etc/mailname.j2
         dest=/etc/mailname
-        backup=yes
+        backup=no
         owner=0 group=0 mode=0644
       notify:
         - restart postfix
@@ -39,7 +39,7 @@
     - name: Copy /etc/postfix/main.cf
       template: src=configs/etc/postfix/main.cf.j2
         dest=/etc/postfix/main.cf
-        backup=yes
+        backup=no
         owner=0 group=0 mode=0644
       notify:
         - restart postfix
@@ -47,7 +47,7 @@
     - name: Copy /etc/postfix/master.cf
       template: src=configs/etc/postfix/master.cf.j2
         dest=/etc/postfix/master.cf
-        backup=yes
+        backup=no
         owner=0 group=0 mode=0644
       notify:
         - restart postfix
