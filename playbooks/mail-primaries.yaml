@@ -115,6 +115,182 @@
         - restart opendkim
 
     #         #
+    # Dovecot #
+    #         #
+
+    - name: Copy /etc/dovecot/dovecot.conf
+      template: src=configs/etc/dovecot/dovecot.conf.j2
+        dest=/etc/dovecot/dovecot.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/dovecot-sql.conf.ext
+      template: src=configs/etc/dovecot/dovecot-sql.conf.ext.j2
+        dest=/etc/dovecot/dovecot-sql.conf.ext
+        backup=no
+        owner=0 group=dovecot mode=0640
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-auth.conf
+      template: src=configs/etc/dovecot/conf.d/10-auth.conf.j2
+        dest=/etc/dovecot/conf.d/10-auth.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-director.conf
+      template: src=configs/etc/dovecot/conf.d/10-director.conf.j2
+        dest=/etc/dovecot/conf.d/10-director.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-logging.conf
+      template: src=configs/etc/dovecot/conf.d/10-logging.conf.j2
+        dest=/etc/dovecot/conf.d/10-logging.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-mail.conf
+      template: src=configs/etc/dovecot/conf.d/10-mail.conf.j2
+        dest=/etc/dovecot/conf.d/10-mail.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-master.conf
+      template: src=configs/etc/dovecot/conf.d/10-master.conf.j2
+        dest=/etc/dovecot/conf.d/10-master.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-ssl.conf
+      template: src=configs/etc/dovecot/conf.d/10-ssl.conf.j2
+        dest=/etc/dovecot/conf.d/10-ssl.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/10-tcpwrapper.conf
+      template: src=configs/etc/dovecot/conf.d/10-tcpwrapper.conf.j2
+        dest=/etc/dovecot/conf.d/10-tcpwrapper.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/15-lda.conf
+      template: src=configs/etc/dovecot/conf.d/15-lda.conf.j2
+        dest=/etc/dovecot/conf.d/15-lda.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/15-mailboxes.conf
+      template: src=configs/etc/dovecot/conf.d/15-mailboxes.conf.j2
+        dest=/etc/dovecot/conf.d/15-mailboxes.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/20-imap.conf
+      template: src=configs/etc/dovecot/conf.d/20-imap.conf.j2
+        dest=/etc/dovecot/conf.d/20-imap.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/20-lmtp.conf
+      template: src=configs/etc/dovecot/conf.d/20-lmtp.conf.j2
+        dest=/etc/dovecot/conf.d/20-lmtp.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/20-managesieve.conf
+      template: src=configs/etc/dovecot/conf.d/20-managesieve.conf.j2
+        dest=/etc/dovecot/conf.d/20-managesieve.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/20-pop3.conf
+      template: src=configs/etc/dovecot/conf.d/20-pop3.conf.j2
+        dest=/etc/dovecot/conf.d/20-pop3.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/90-acl.conf
+      template: src=configs/etc/dovecot/conf.d/90-acl.conf.j2
+        dest=/etc/dovecot/conf.d/90-acl.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/90-plugin.conf
+      template: src=configs/etc/dovecot/conf.d/90-plugin.conf.j2
+        dest=/etc/dovecot/conf.d/90-plugin.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/90-quota.conf
+      template: src=configs/etc/dovecot/conf.d/90-quota.conf.j2
+        dest=/etc/dovecot/conf.d/90-quota.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/90-sieve-extprograms.conf
+      template: src=configs/etc/dovecot/conf.d/90-sieve-extprograms.conf.j2
+        dest=/etc/dovecot/conf.d/90-sieve-extprograms.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/90-sieve.conf
+      template: src=configs/etc/dovecot/conf.d/90-sieve.conf.j2
+        dest=/etc/dovecot/conf.d/90-sieve.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Copy /etc/dovecot/conf.d/auth-sql.ext.conf
+      template: src=configs/etc/dovecot/conf.d/auth-sql.ext.conf.j2
+        dest=/etc/dovecot/conf.d/auth-sql.ext.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart dovecot
+
+    - name: Create /etc/dovecot/sieve-before directory
+      action: file path=/etc/dovecot/sieve-before state=directory
+        owner=0 group=0 mode=0755
+
+    #         #
     # Postfix #
     #         #
 
@@ -217,6 +393,9 @@
   handlers:
     - name: restart opendkim
       service: name=opendkim state=restarted
+
+    - name: restart dovecot
+      service: name=dovecot state=restarted
 
     - name: restart postfix
       service: name=postfix state=restarted
