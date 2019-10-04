@@ -1,5 +1,5 @@
 driver = mysql
-connect = host={{ sql_server }} dbname= {{ sql_database }} user={{ sql_user }} password={{ sql_password }}
+connect = host={{ sql_server }} dbname={{ sql_database }} user={{ sql_user }} password={{ sql_password }}
 default_pass_scheme = SHA512-CRYPT
 password_query = SELECT username as user, password, \
                         CONCAT('/var/mail/vhosts/',maildir) AS userdb_home, \
