@@ -45,8 +45,23 @@
         path: /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
       register: cert_result
 
-    - name: Run certbot, if letsencrypt certificate does not exist
+    - name: Allow HTTP port 80 for ACME challenge
+      ufw:
+          rule: allow
+          port: 80
+          proto: tcp
+      when: cert_result.stat.exists == False 
+
+    - name: Run certbot
       command: /usr/bin/certbot certonly --standalone -d {{ ansible_fqdn }}
+      when: cert_result.stat.exists == False 
+
+    - name: Delete allow HTTP port 80 for ACME challenge
+      ufw:
+          rule: allow
+          port: 80
+          proto: tcp
+          delete: yes
       when: cert_result.stat.exists == False 
 
     #                #
