@@ -3,8 +3,8 @@
 #
 # Things that need to be changed to use:
 # - Edit mail-primaries.yaml.vars
-# - Add dkim keys to /etc/dkimkeys
-# - Create SigningTable, KeyTable, and TrustedHosts in /etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
+# - Add dkim keys to configs/etc/dkimkeys
+# - Create SigningTable, KeyTable, and TrustedHosts in configs/etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
 # - Mount a storage for the mail as /var/mail
 # 
 # Work in progress.
@@ -278,9 +278,9 @@
       notify:
         - restart dovecot
 
-    - name: Copy /etc/dovecot/conf.d/auth-sql.ext.conf
-      template: src=configs/etc/dovecot/conf.d/auth-sql.ext.conf.j2
-        dest=/etc/dovecot/conf.d/auth-sql.ext.conf
+    - name: Copy /etc/dovecot/conf.d/auth-sql.conf.ext
+      template: src=configs/etc/dovecot/conf.d/auth-sql.conf.ext.j2
+        dest=/etc/dovecot/conf.d/auth-sql.conf.ext
         backup=no
         owner=0 group=0 mode=0644
       notify:
