@@ -7,6 +7,7 @@
 # - Create SigningTable, KeyTable, and TrustedHosts in configs/etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
 # - Mount a storage for the mail as /var/mail
 # - Set hostname of server to FQDN you need it to be, and adjust DNS records accordingly
+# - Create user with name vmail group vmail with uid and gid of 5000
 # 
 # Work in progress.
 # Author: Chuck Findlay <chuck@findlayis.me>
