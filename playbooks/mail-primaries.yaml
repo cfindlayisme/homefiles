@@ -1,4 +1,4 @@
-# Sets up a solid postfix/dovecot/spamassassin/clamav configuration backed by MySQL
+# Sets up a solid postfix/dovecot configuration backed by MySQL
 # Designed for one server. Relays should be configured seperately.
 # 
 # Not yet usable
@@ -27,6 +27,7 @@
         - dovecot-imapd
         - dovecot-pop3d
         - dovecot-sieve
+        - certbot
 
     - name: Allow SMTP on port 25/tcp
       ufw:
