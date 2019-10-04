@@ -34,6 +34,7 @@
         - dovecot-imapd
         - dovecot-pop3d
         - dovecot-sieve
+        - dovecot-managesieved
         - certbot
 
     #                         #
