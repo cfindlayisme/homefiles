@@ -131,6 +131,16 @@
       notify:
         - restart postfix
 
+    - name: Generating 2048 dhparam
+      openssl_dhparam:
+        path: /etc/postfix/dh2048.pem
+        size: 2048
+
+    - name: Generating 512 dhparam
+      openssl_dhparam:
+        path: /etc/postfix/dh512.pem
+        size: 512
+
   handlers:
     - name: restart postfix
       service: name=postfix state=restarted
