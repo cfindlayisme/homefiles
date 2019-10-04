@@ -21,6 +21,12 @@
         - monit
         - unattended-upgrades
 
+    - name: Copy /etc/apt/listchanges.conf
+      template: src=configs/etc/apt/listchanges.conf.j2
+        dest=/etc/apt/listchanges.conf
+        backup=no
+        owner=0 group=0 mode=0644
+
     - name: Enable firewall
       ufw:
         state: enabled
