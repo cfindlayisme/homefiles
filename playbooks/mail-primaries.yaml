@@ -6,7 +6,6 @@
 # - Add dkim keys to /etc/dkimkeys
 # - Create SigningTable, KeyTable, and TrustedHosts in /etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
 # - Mount a storage for the mail as /var/mail
-# - Generate certificate with certbot for server
 # 
 # Work in progress.
 # Author: Chuck Findlay <chuck@findlayis.me>
@@ -37,6 +36,23 @@
         - dovecot-sieve
         - certbot
 
+    #                         #
+    # Letsencrypt certificate #
+    #                         #
+
+    - name: Check if letsencrypt certificate exists
+      stat:
+        path: /etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+      register: cert_result
+
+    - name: Run certbot, if letsencrypt certificate does not exist
+      command: /usr/bin/certbot certonly --standalone -d {{ ansible_fqdn }}
+      when: cert_result.stat.exists == False 
+
+    #                #
+    # ufw (firewall) #
+    #                #
+
     - name: Allow SMTP on port 25/tcp
       ufw:
           rule: allow
@@ -56,6 +72,10 @@
         owner=0 group=0 mode=0644
       notify:
         - restart postfix
+
+    #          #
+    # Opendkim #
+    #          #
 
     - name: Copy /etc/opendkim.conf
       template: src=configs/etc/opendkim.conf.j2
@@ -78,6 +98,10 @@
         owner=0 group=0 mode=0644
       notify:
         - restart opendkim
+
+    #         #
+    # Postfix #
+    #         #
 
     - name: Copy /etc/postfix/main.cf
       template: src=configs/etc/postfix/main.cf.j2
