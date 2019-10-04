@@ -32,10 +32,10 @@ smtp_tls_security_level = may
 smtpd_tls_security_level = may
 
 # No old SSL
-smtpd_tls_protocols = {{ postfix_tlsversions }}
-smtp_tls_protocols = {{ postfix_tlsversions }}
-smtpd_tls_mandatory_protocols = {{ postfix_tlsversions }}
-smtp_tls_mandatory_protocols = {{ postfix_tlsversions }}
+smtpd_tls_protocols = {{ all_tlsversions }}
+smtp_tls_protocols = {{ all_tlsversions }}
+smtpd_tls_mandatory_protocols = {{ all_tlsversions }}
+smtp_tls_mandatory_protocols = {{ all_tlsversions }}
 
 smtpd_tls_mandatory_ciphers = high
 smtp_tls_mandatory_ciphers = high
@@ -46,8 +46,8 @@ tls_ssl_options = NO_COMPRESSION
 # These are insecure ciphers, so we disable them
 smtpd_tls_exclude_ciphers = aNULL, MD5 , DES, ADH, RC4, PSD, SRP, 3DES, eNULL
 smtp_tls_exclude_ciphers = aNULL, MD5 , DES, ADH, RC4, PSD, SRP, 3DES, eNULL
-tls_high_cipherlist = {{ postfix_tlsciphers }}
-tls_medium_cipherlist = {{ postfix_tlsciphers }}
+tls_high_cipherlist = {{ all_tlsciphers }}
+tls_medium_cipherlist = {{ all_tlsciphers }}
 smtpd_tls_eecdh_grade = strong
 # END CIPHERS #
 

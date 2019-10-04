@@ -1,0 +1,7 @@
+ssl = required
+ssl_cert = </etc/letsencrypt/live/{{ ansible_fqdn }}/fullchain.pem
+ssl_key = </etc/letsencrypt/live/{{ ansible_fqdn }}/privkey.pem
+ssl_dh_parameters_length = 2048
+ssl_protocols = {{ all_tlsversions }}
+ssl_cipher_list = {{ all_tlsciphers }};
+ssl_prefer_server_ciphers = yes

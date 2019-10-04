@@ -1,5 +1,5 @@
-user = {{ postfix_sql_user }}
-password = {{ postfix_sql_password }}
-hosts = {{ postfix_sql_server }}
-dbname = {{ postfix_sql_database }}
+user = {{ sql_user }}
+password = {{ sql_password }}
+hosts = {{ sql_server }}
+dbname = {{ sql_database }}
 query = SELECT domain FROM domains WHERE domain='%s' and backupmx = 0 and active = 1

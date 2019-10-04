@@ -5,6 +5,7 @@
 # - Edit mail-primaries.yaml.vars
 # - Add dkim keys to /etc/dkimkeys
 # - Create SigningTable, KeyTable, and TrustedHosts in /etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
+# - Mount a storage for the mail as /var/mail
 # 
 # Work in progress.
 # Author: Chuck Findlay <chuck@findlayis.me>

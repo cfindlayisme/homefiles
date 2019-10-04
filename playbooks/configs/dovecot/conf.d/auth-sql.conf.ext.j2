@@ -1,0 +1,12 @@
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+userdb {
+    args = /etc/dovecot/dovecot-sql.conf.ext
+    driver = sql
+}
+dict {
+    sqluserquota = mysql:/etc/dovecot/dovecot-dict-sql-user.conf
+    sqldomainquota = mysql:/etc/dovecot/dovecot-sql-domain.conf
+}

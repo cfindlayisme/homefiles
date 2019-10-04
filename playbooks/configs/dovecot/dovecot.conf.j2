@@ -1,0 +1,7 @@
+!include_try /usr/share/dovecot/protocols.d/*.protocol
+protocols = imap lmtp
+login_greeting = Ready.
+dict {
+}
+!include conf.d/*.conf
+!include_try local.conf
