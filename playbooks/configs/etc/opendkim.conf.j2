@@ -1,0 +1,13 @@
+Syslog                  yes
+SyslogSuccess           Yes
+UMask                   007
+Mode                    sv
+OversignHeaders         From
+PidFile                 /var/run/opendkim/opendkim.pid
+TrustAnchorFile         /usr/share/dns/root.key
+UserID                  opendkim
+SOCKET                  inet:8891@localhost
+KeyTable                /etc/opendkim/KeyTable
+SigningTable            /etc/opendkim/SigningTable
+ExternalIgnoreList      /etc/opendkim/TrustedHosts
+InternalHosts           /etc/opendkim/TrustedHosts

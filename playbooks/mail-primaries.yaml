@@ -1,7 +1,12 @@
 # Sets up a solid postfix/dovecot configuration backed by MySQL
 # Designed for one server. Relays should be configured seperately.
+#
+# Things that need to be changed to use:
+# - Edit mail-primaries.yaml.vars
+# - Add dkim keys to /etc/dkimkeys
+# - Create SigningTable, KeyTable, and TrustedHosts in /etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
 # 
-# Not yet usable
+# Work in progress.
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
 - hosts: mailservers
@@ -20,6 +25,7 @@
         - postfix
         - postfix-mysql
         - postfix-policyd-spf-perl
+        - libsasl2-modules
         - opendkim
         - dovecot-mysql
         - dovecot-sieve
@@ -48,6 +54,28 @@
         owner=0 group=0 mode=0644
       notify:
         - restart postfix
+
+    - name: Copy /etc/opendkim.conf
+      template: src=configs/etc/opendkim.conf.j2
+        dest=/etc/opendkim.conf
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - restart opendkim
+
+    - name: Copy dkim keys to /etc/dkimkeys/
+      action: copy src=configs/etc/dkimkeys/
+        dest=/etc/dkimkeys/
+        owner=opendkim group=opendkim mode=0600
+      notify:
+        - restart opendkim
+
+    - name: Copy /etc/opendkim/
+      action: copy src=configs/etc/opendkim/
+        dest=/etc/opendkim/
+        owner=0 group=0 mode=0644
+      notify:
+        - restart opendkim
 
     - name: Copy /etc/postfix/main.cf
       template: src=configs/etc/postfix/main.cf.j2
@@ -90,12 +118,11 @@
       notify:
         - postmap tls_policy
 
-    # TODO: 0644 mode is a little too open. Should verify it can be more restricted
     - name: Copy /etc/postfix/conf.d/relay_passwords
       template: src=configs/etc/postfix/conf.d/relay_passwords.j2
         dest=/etc/postfix/conf.d/relay_passwords
         backup=no
-        owner=0 group=0 mode=0644
+        owner=0 group=0 mode=0600
       notify:
         - postmap relay_passwords
 
@@ -142,6 +169,9 @@
         size: 512
 
   handlers:
+    - name: restart opendkim
+      service: name=opendkim state=restarted
+
     - name: restart postfix
       service: name=postfix state=restarted
 
