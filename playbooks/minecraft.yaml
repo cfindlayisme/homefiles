@@ -1,9 +1,13 @@
 # Sets up a minecraft server
 #
+# - Set hostname to FQDN
+# - Run base-config playbook
 # - Mount /minecraft for config, world
-# - Create minecraft user, locked account, /usr/sbin/nologin, /minecraft directory home uid 5000 gid 5000
-# - Run service once, make eula.txt = yes inside
-# - And finally start service
+# - chown -R minecraft:minecraft /minecraft
+# - Run this playbook
+# - SSH into server and change eula.txt file so eula=true (only needs to be done once per /minecraft drive)
+# - service minecraft restart
+# - Done
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
@@ -22,6 +26,26 @@
       with_items:
         - screen
         - openjdk-8-jre-headless
+
+    #                          #
+    # Service account creation #
+    #                          #
+    - name: Create minecraft group
+      group:
+        name: minecraft
+        state: present
+        gid: 5000
+
+    - name: Create minecraft account
+      user:
+        name: minecraft
+        group: minecraft
+        state: present
+        home: /minecraft
+        password_lock: yes
+        create_home: no
+        shell: /usr/sbin/nologin
+        uid: 5000
 
     #                #
     # ufw (firewall) #
