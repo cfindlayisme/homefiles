@@ -1,0 +1,5 @@
+# Sample works fine for n1-standard GCS setup (Make sure /minecraft is an SSD!)
+minecraft_version: '1.14.4'
+minecraft_server_url: 'https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar'
+minecraft_xms: '512M'
+minecraft_xmx: '3G'
