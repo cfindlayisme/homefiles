@@ -1,0 +1,25 @@
+# Sets up a minecraft server
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+
+# Steps (not implemented yet, but commented out)
+
+# Mount /minecraft for config, world
+
+# Create minecraft user, locked account, /usr/sbin/nologin, /minecraft directory home uid 5000 gid 5000
+
+# ufw allow 25565/tcp
+
+# sudo apt install openjdk-8-jre-headless screen
+
+# wget https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar -O /srv/minecraft_server.1.14.4.jar
+# chown root:root /srv/minecraft_server.1.14.4.jar
+# chmod 0755 /srv/minecraft_server.1.14.4.jar
+
+# if eula not checked yes
+# sudo -u minecraft java -Xms1G -Xmx3G -d64 -jar /srv/minecraft_server.1.14.4.jar nogui
+
+# copy a .service file over
+
+#fin
