@@ -49,10 +49,10 @@
 
     - name: Check if server .jar file exists exists
       stat:
-        path: /minecraft/eula.txt
+        path: /srv/minecraft_server.{{ minecraft_version }}.jar
       register: jar_result
 
-    - name: Downloading server .jar file if nessescary
+    - name: Downloading server .jar file if needed
       command: /usr/bin/wget {{ minecraft_server_url }} -O /srv/minecraft_server.{{ minecraft_version }}.jar
       when: jar_result.stat.exists == False 
 
