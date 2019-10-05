@@ -3,7 +3,7 @@
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
 
-# Steps (not implemented yet, but commented out)
+# Steps (not implemented yet, but commented out) after running base-config
 
 # Mount /minecraft for config, world
 
