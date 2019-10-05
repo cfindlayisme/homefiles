@@ -7,7 +7,7 @@ WorkingDirectory=/minecraft
 User=minecraft
 Group=minecraft
 
-ExecStart=/usr/bin/screen -dmS minecraft java -Xms{{ minecraft_xms }} -Xmx{{ minecraft_xmx }} -server -jar /srv/minecraft_server.{{ minecraft_version }}.jar nogui
+ExecStart=/usr/bin/screen -DmS minecraft java -Xms{{ minecraft_xms }} -Xmx{{ minecraft_xmx }} -server -jar /srv/minecraft_server.{{ minecraft_version }}.jar nogui
 
 ExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff "say SERVER SHUTTING DOWN. Saving map..."\\015'
 ExecStop=/usr/bin/screen -p 0 -S minecraft -X eval 'stuff "save-all"\\015'
