@@ -2,6 +2,8 @@
 #
 # - Mount /minecraft for config, world
 # - Create minecraft user, locked account, /usr/sbin/nologin, /minecraft directory home uid 5000 gid 5000
+# - Run service once, make eula.txt = yes inside
+# - And finally start service
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
