@@ -1,25 +1,61 @@
 # Sets up a minecraft server
 #
+# - Mount /minecraft for config, world
+# - Create minecraft user, locked account, /usr/sbin/nologin, /minecraft directory home uid 5000 gid 5000
+#
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
+- hosts: minecraftservers
+  user: root
 
-# Steps (not implemented yet, but commented out) after running base-config
+  vars_files:
+    - minecraft.yaml.vars
 
-# Mount /minecraft for config, world
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=86400
 
-# Create minecraft user, locked account, /usr/sbin/nologin, /minecraft directory home uid 5000 gid 5000
+    - name: Install depends
+      apt: name={{ item }} state=latest
+      with_items:
+        - screen
+        - openjdk-8-jre-headless
 
-# ufw allow 25565/tcp
+    #                #
+    # ufw (firewall) #
+    #                #
 
-# sudo apt install openjdk-8-jre-headless screen
+    - name: Allow port 25565 (TCP/UDP) in
+      ufw:
+          rule: allow
+          port: 25565
 
-# wget https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar -O /srv/minecraft_server.1.14.4.jar
-# chown root:root /srv/minecraft_server.1.14.4.jar
-# chmod 0755 /srv/minecraft_server.1.14.4.jar
+    #         #
+    # Systemd #
+    #         #
 
-# if eula not checked yes
-# sudo -u minecraft java -Xms1G -Xmx3G -d64 -jar /srv/minecraft_server.1.14.4.jar nogui
+    - name: Copy /etc/systemd/system/minecraft.service
+      template: src=configs/etc/systemd/system/minecraft.service.j2
+        dest=/etc/systemd/system/minecraft.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
 
-# copy a .service file over
+    #          #
+    # Download #
+    #          #
 
-#fin
+    - name: Check if server .jar file exists exists
+      stat:
+        path: /minecraft/eula.txt
+      register: jar_result
+
+    - name: Downloading server .jar file if nessescary
+      command: /usr/bin/wget {{ minecraft_server_url }} -O /srv/minecraft_server.{{ minecraft_version }}.jar
+      when: jar_result.stat.exists == False 
+
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
