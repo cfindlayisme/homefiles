@@ -85,13 +85,6 @@
       notify:
         - restart monit
 
-    - name: Upload /etc/monit/conf.d/postfix.conf
-      action: copy src=configs/etc/monit/conf.d/postfix.conf
-        dest=/etc/monit/conf.d/postfix.conf
-        owner=0 group=0 mode=644
-      notify:
-        - restart monit
-
   handlers:
     - name: restart sshd
       service: name=sshd state=restarted
