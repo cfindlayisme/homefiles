@@ -41,6 +41,7 @@
         owner=0 group=0 mode=0644
       notify:
         - reload systemd
+        - enable minecraft
 
     #          #
     # Download #
@@ -59,3 +60,9 @@
     - name: reload systemd
       systemd:
         daemon_reload: yes
+
+    - name: enable minecraft
+      systemd:
+        name: minecraft
+        enabled: yes
+        masked: no
