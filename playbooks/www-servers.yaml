@@ -61,6 +61,13 @@
       notify:
         - restart nginx
 
+    - name: Copy site configuration files to /etc/nginx/sites
+      action: copy src=configs/etc/nginx/sites/
+        dest=/etc/nginx/sites/
+        owner=root group=root mode=0644
+      notify:
+        - restart nginx
+
     #                                #
     # SSL Configuration/Installation #
     #                                #
