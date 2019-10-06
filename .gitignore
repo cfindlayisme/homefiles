@@ -5,4 +5,5 @@ playbooks/configs/etc/dkimkeys/*
 playbooks/configs/etc/opendkim/*
 playbooks/configs/etc/monit/conf.d/alert-preferences.conf
 playbooks/configs/etc/monit/conf.d/http-preferences.conf
+playbooks/configs/etc/nginx/sites/*
 playbooks/*.vars
