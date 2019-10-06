@@ -17,6 +17,7 @@
         - nginx
         - php-fpm
         - php-mysql
+        - libnginx-mod-http-headers-more-filter
 
     - name: Allow HTTP on port 80/tcp
       ufw:
