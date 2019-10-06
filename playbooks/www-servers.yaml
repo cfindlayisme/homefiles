@@ -61,6 +61,14 @@
       notify:
         - restart nginx
 
+    #                                #
+    # SSL Configuration/Installation #
+    #                                #
+
+    - name: Generating 4096 dhparam
+      openssl_dhparam:
+        path: /etc/postfix/dh4096.pem
+        size: 4096
 
   handlers:
     - name: restart nginx
