@@ -17,6 +17,7 @@
 
   vars_files:
     - mail-primaries.yaml.vars
+    - tls.vars
 
   tasks:
     - name: Update apt cache
