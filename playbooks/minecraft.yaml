@@ -27,6 +27,14 @@
         - screen
         - openjdk-8-jre-headless
 
+    #           #
+    # Scripting #
+    #           #
+    - name: Upload /usr/local/bin/minecraft-attach.sh
+      action: copy src=configs/usr/local/bin/minecraft-attach.sh
+        dest=/usr/local/bin/minecraft-attach.sh
+        owner=0 group=0 mode=0755
+
     #                          #
     # Service account creation #
     #                          #
