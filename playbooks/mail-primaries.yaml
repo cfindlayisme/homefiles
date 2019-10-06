@@ -2,12 +2,11 @@
 # Designed for one server. Relays should be configured seperately.
 #
 # Things that need to be changed to use:
-# - Edit mail-primaries.yaml.vars
+# - Edit mail-primaries.yaml.vars and tls.vars
 # - Add dkim keys to configs/etc/dkimkeys
 # - Create SigningTable, KeyTable, and TrustedHosts in configs/etc/opendkim and populate properly, pointing to /etc/dkimkeys/?.key for each key
 # - Mount a storage for the mail as /var/mail
 # - Set hostname of server to FQDN you need it to be, and adjust DNS records accordingly
-# - Create user with name vmail group vmail with uid and gid of 5000
 # 
 # Work in progress.
 # Author: Chuck Findlay <chuck@findlayis.me>
@@ -54,6 +53,26 @@
         owner=0 group=0 mode=644
       notify:
         - restart monit
+
+    #                          #
+    # Service account creation #
+    #                          #
+    - name: Create vmail group
+      group:
+        name: vmail
+        state: present
+        gid: 5000
+
+    - name: Create vmail account
+      user:
+        name: vmail
+        group: vmail
+        state: present
+        home: /var/mail
+        password_lock: yes
+        create_home: no
+        shell: /usr/sbin/nologin
+        uid: 5000
 
     #                #
     # ufw (firewall) #
