@@ -44,7 +44,7 @@
         home: /minecraft
         password_lock: yes
         create_home: no
-        shell: /usr/sbin/nologin
+        shell: /bin/bash
         uid: 5000
 
     #                #
