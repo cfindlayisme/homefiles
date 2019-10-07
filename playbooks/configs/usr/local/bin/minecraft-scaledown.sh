@@ -17,7 +17,8 @@ count=0
 while true
 do
 
-    load=$(uptime | sed -e 's/.*load average: //g' | awk '{ print $3 }')
+    # Use 5 minute average
+    load=$(uptime | sed -e 's/.*load average: //g' | tr ',' ' ' | awk '{ print $2 }')
     res=$(echo $load'<'$threshold | bc -l)
 
     # Count up for under threshold, and down for above
