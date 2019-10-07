@@ -25,9 +25,10 @@ do
     then
         ((count+=1))
     elif ((count > 0))
+    then
         ((count-=1))
     fi
-
+    
     if ((count == 15))
     then
         # Fifteen minute warning. Enough time to abort it with activity
