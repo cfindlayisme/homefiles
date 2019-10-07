@@ -24,7 +24,7 @@ do
     if (( $res ))
     then
         ((count+=1))
-    else
+    elif ((count > 0))
         ((count-=1))
     fi
 
