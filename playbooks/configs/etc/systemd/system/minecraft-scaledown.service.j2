@@ -1,0 +1,15 @@
+[Unit]
+Description=Minecraft scale-down service
+After=network.target
+
+[Service]
+WorkingDirectory=/root
+User=root
+Group=root
+Type=simple
+
+ExecStart=/usr/local/bin/minecraft-scaledown.sh
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target

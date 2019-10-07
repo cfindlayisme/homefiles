@@ -26,6 +26,7 @@
       with_items:
         - screen
         - openjdk-8-jre-headless
+        - bc
 
     #           #
     # Scripting #
@@ -34,6 +35,15 @@
       action: copy src=configs/usr/local/bin/minecraft-attach.sh
         dest=/usr/local/bin/minecraft-attach.sh
         owner=0 group=0 mode=0755
+
+    - name: Upload /usr/local/bin/minecraft-scaledown.sh
+      action: copy src=configs/usr/local/bin/minecraft-scaledown.sh
+        dest=/usr/local/bin/minecraft-scaledown.sh
+        owner=0 group=0 mode=0755
+      notify:
+        - reload systemd
+        - enable minecraft-scaledown
+        - restart minecraft-scaledown
 
     #                          #
     # Service account creation #
@@ -78,6 +88,16 @@
         - enable minecraft
         - restart minecraft
 
+    - name: Copy /etc/systemd/system/minecraft-scaledown.service
+      template: src=configs/etc/systemd/system/minecraft-scaledown.service.j2
+        dest=/etc/systemd/system/minecraft-scaledown.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
+        - enable minecraft-scaledown
+        - restart minecraft-scaledown
+
     #          #
     # Download #
     #          #
@@ -104,3 +124,12 @@
 
     - name: restart minecraft
       service: name=minecraft state=restarted
+
+    - name: enable minecraft-scaledown
+      systemd:
+        name: minecraft-scaledown
+        enabled: yes
+        masked: no
+
+    - name: restart minecraft-scaledown
+      service: name=minecraft-scaledown state=restarted
