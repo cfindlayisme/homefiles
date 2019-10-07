@@ -7,3 +7,4 @@ playbooks/configs/etc/monit/conf.d/alert-preferences.conf
 playbooks/configs/etc/monit/conf.d/http-preferences.conf
 playbooks/configs/etc/nginx/sites/*
 playbooks/*.vars
+gcs/cloud-functions/*/.env.yaml
