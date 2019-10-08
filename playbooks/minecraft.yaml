@@ -26,7 +26,6 @@
       with_items:
         - screen
         - openjdk-8-jre-headless
-        - bc
 
     #           #
     # Scripting #

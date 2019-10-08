@@ -1,46 +1,27 @@
 #!/bin/bash
-# Monitors the load on the server and if very low for awhile assumes no one is playing, so shuts down 
-# Based off of http://rohitrawat.com/automatically-shutting-down-google-cloud-platform-instance/
-#
-# Should apply to other cloud services like AWS, providing VM is sized properly
-# Assuming n1-standard GCS instance:
-# - Average one player: 0.33 active idle (ie, sitting in a lowly populated area, no redtone)
-# - Average no players: 0.01
-#
-# Gives a 30 minute buffer to login and do stuff
+# Monitors for incoming connections to minecraft (ie, players) counts up for each minute to thirty minutes. Then shuts down
+# Counts back down for each minute a user is connected until at zero minutes
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
-threshold=0.2
 
 count=0
 while true
 do
 
-    # Use 5 minute average
-    load=$(uptime | sed -e 's/.*load average: //g' | tr ',' ' ' | awk '{ print $2 }')
-    res=$(echo $load'<'$threshold | bc -l)
+    users=$(netstat -tnpa | grep 'ESTABLISHED.*java' | wc -l)
 
     # Count up for under threshold, and down for above
-    if (( $res ))
+    if (( users == 0 ))
     then
         ((count+=1))
     elif ((count > 0))
     then
         ((count-=1))
     fi
-    
-    if ((count == 15))
-    then
-        # Fifteen minute warning. Enough time to abort it with activity
-        sudo -u minecraft script /dev/null -qc "/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"say Server appears idle! It will shut down in fifteen minutes if it stays this way.\"\\015'"
-    fi
 
     if ((count > 30))
     then
-        # Quick warning to connected clients
-        sudo -u minecraft script /dev/null -qc "/usr/bin/screen -p 0 -S minecraft -X eval 'stuff \"say Server has appeared idle for the past thirty minutes, shutdown now scheduled for five minutes from this message. Data will be saved.\"\\015'"
-        sleep 300
         sudo poweroff
     fi
 
