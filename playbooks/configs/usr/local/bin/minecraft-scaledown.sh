@@ -1,5 +1,5 @@
 #!/bin/bash
-# Monitors for incoming connections to minecraft (ie, players) counts up for each minute to thirty minutes. Then shuts down
+# Monitors for a lack of incoming connections to minecraft (ie, players) and counts up for each minute up to thirty minutes. Then shuts down
 # Counts back down for each minute a user is connected until at zero minutes
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
