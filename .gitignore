@@ -1,10 +1,11 @@
 *.swp
 *.swo
 playbooks/configs/root/.ssh/authorized_keys
-playbooks/configs/etc/dkimkeys/*
-playbooks/configs/etc/opendkim/*
+playbooks/retired/configs/etc/dkimkeys/*
+playbooks/retired/configs/etc/opendkim/*
 playbooks/configs/etc/monit/conf.d/alert-preferences.conf
 playbooks/configs/etc/monit/conf.d/http-preferences.conf
 playbooks/configs/etc/nginx/sites/*
 playbooks/*.vars
+playbooks/retired/*.vars
 gcs/cloud-functions/*/.env.yaml
