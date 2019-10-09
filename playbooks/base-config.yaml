@@ -63,6 +63,12 @@
         backup=no
         owner=0 group=0 mode=0644
 
+    - name: Upload /root/.forward
+      template: src=configs/root/.forward.j2
+        dest=/root/.forward
+        backup=no
+        owner=0 group=0 mode=0644
+
     - name: Upload /etc/monit/conf.d/alert-preferences.conf
       template: src=configs/etc/monit/conf.d/alert-preferences.conf.j2
         dest=/etc/monit/conf.d/alert-preferences.conf
