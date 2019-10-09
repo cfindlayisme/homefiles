@@ -1,5 +1,6 @@
-# Builds a factorio server after the base configuration of the server has been installed.
+# Builds a factorio server
 # 
+# Work in progress
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
 - hosts: factorio
@@ -8,3 +9,107 @@
   tasks:
     - name: Update apt cache
       apt: update_cache=yes cache_valid_time=86400
+
+    - name: Install depends
+      apt: name={{ item }} state=latest
+      with_items:
+        - screen
+
+    #           #
+    # Scripting #
+    #           #
+    - name: Upload /usr/local/bin/factorio-attach.sh
+      action: copy src=configs/usr/local/bin/factorio-attach.sh
+        dest=/usr/local/bin/factorio-attach.sh
+        owner=0 group=0 mode=0755
+
+    - name: Upload /usr/local/bin/factorio-scaledown.sh
+      action: copy src=configs/usr/local/bin/factorio-scaledown.sh
+        dest=/usr/local/bin/factorio-scaledown.sh
+        owner=0 group=0 mode=0755
+      notify:
+        - reload systemd
+        - enable factorio-scaledown
+        - restart factorio-scaledown
+
+    #                          #
+    # Service account creation #
+    #                          #
+    - name: Create factorio group
+      group:
+        name: factorio
+        state: present
+        gid: 5000
+
+    - name: Create factorio account
+      user:
+        name: factorio
+        group: factorio
+        state: present
+        home: /factorio
+        password_lock: yes
+        create_home: no
+        shell: /bin/bash
+        uid: 5000
+
+    #                #
+    # ufw (firewall) #
+    #                #
+
+    - name: Allow port 34197 (UDP) in
+      ufw:
+          rule: allow
+          port: 34197
+
+    #         #
+    # Systemd #
+    #         #
+
+    - name: Copy /etc/systemd/system/factorio.service
+      template: src=configs/etc/systemd/system/factorio.service.j2
+        dest=/etc/systemd/system/factorio.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
+        - enable factorio
+        - restart factorio
+
+    - name: Copy /etc/systemd/system/factorio-scaledown.service
+      template: src=configs/etc/systemd/system/factorio-scaledown.service.j2
+        dest=/etc/systemd/system/factorio-scaledown.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
+        - enable factorio-scaledown
+        - restart factorio-scaledown
+
+    #          #
+    # Download #
+    #          #
+
+    #TODO
+
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: enable factorio
+      systemd:
+        name: factorio
+        enabled: yes
+        masked: no
+
+    - name: restart factorio
+      service: name=factorio state=restarted
+
+    - name: enable factorio-scaledown
+      systemd:
+        name: factorio-scaledown
+        enabled: yes
+        masked: no
+
+    - name: restart factorio-scaledown
+      service: name=factorio-scaledown state=restarted
