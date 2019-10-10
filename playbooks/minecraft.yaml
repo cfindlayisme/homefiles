@@ -3,8 +3,8 @@
 # - Set hostname to FQDN
 # - Run base-config playbook
 # - Mount /minecraft for config, world
-# - chown -R minecraft:minecraft /minecraft
 # - Run this playbook
+# - chown -R minecraft:minecraft /minecraft
 # - SSH into server and change eula.txt file so eula=true (only needs to be done once per /minecraft drive)
 # - service minecraft restart
 # - Done
