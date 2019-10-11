@@ -74,7 +74,7 @@
 
     - name: Generating 4096 dhparam
       openssl_dhparam:
-        path: /etc/postfix/dh4096.pem
+        path: /etc/nginx/dh4096.pem
         size: 4096
 
   handlers:
