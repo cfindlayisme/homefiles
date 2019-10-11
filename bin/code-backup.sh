@@ -14,8 +14,9 @@ if ! grep -qs $HOME'/GoogleDrive ' /proc/mounts; then
 fi
 
 if grep -qs $HOME'/GoogleDrive ' /proc/mounts; then
+    hostname=$(hostname)
     name=$(date '+%Y-%m-%d %H:%M')
 
-    tar -zcf "/tmp/$name.tar.gz" code
-    mv "/tmp/$name.tar.gz" ~/GoogleDrive/Code
+    tar -zcf "/tmp/$hostname $name.tar.gz" code
+    mv "/tmp/$hostname $name.tar.gz" ~/GoogleDrive/Code
 fi
