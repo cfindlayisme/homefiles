@@ -10,7 +10,7 @@
 cd ~
 
 if ! grep -qs '/mnt/GoogleDrive ' /proc/mounts; then
-    google-drive-ocamlfuse ~/GoogleDrive
+    google-drive-ocamlfuse /mnt/GoogleDrive
 fi
 
 if grep -qs '/mnt/GoogleDrive ' /proc/mounts; then
