@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Used to regularly backup code from ~/code to a folder called Code on Google Drive in a tar file
+# Used to regularly backup code from ~/code to Backups & Archives/Code on Google Drive in a tar file
 # Backed up seperately from other system backups done
 # Assumes you have google-drive-ocamlfuse setup, and that /mnt/GoogleDrive exists
 # Cron is your friend for it
@@ -18,5 +18,5 @@ if grep -qs '/mnt/GoogleDrive ' /proc/mounts; then
     name=$(date '+%Y-%m-%d %H:%M')
 
     tar -zcf "/tmp/$hostname $name.tar.gz" code
-    mv "/tmp/$hostname $name.tar.gz" /mnt/GoogleDrive/Code
+    mv "/tmp/$hostname $name.tar.gz" "/mnt/GoogleDrive/Backups & Archives/Code"
 fi
