@@ -20,6 +20,7 @@
         - fail2ban
         - monit
         - unattended-upgrades
+        - aptitude
 
     - name: Copy /etc/apt/listchanges.conf
       template: src=configs/etc/apt/listchanges.conf.j2
