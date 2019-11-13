@@ -11,10 +11,12 @@
       apt: update_cache=yes cache_valid_time=86400
 
     - name: Install depends
-      apt: name={{ item }} state=latest
-      with_items:
-        - screen
-
+      apt:
+        name:
+          - screen
+        state: present
+        autoclean: yes
+        
     #           #
     # Scripting #
     #           #

@@ -16,14 +16,16 @@
     - name: Update apt cache
       apt: update_cache=yes cache_valid_time=86400
 
-    - name: Install required programs
-      apt: name={{ item }} state=latest
-      with_items:
+    - name: Install depends
+      apt:
+        name:
         - nginx
         - php-fpm
         - php-mysql
         - libnginx-mod-http-headers-more-filter
         - certbot
+        state: present
+        autoclean: yes
 
     #                #
     # ufw (firewall) #
