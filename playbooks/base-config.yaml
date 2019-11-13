@@ -13,14 +13,16 @@
       apt: update_cache=yes cache_valid_time=86400
 
     - name: Install required programs
-      apt: name={{ item }} state=latest
-      with_items:
-        - ufw
-        - rsync
-        - fail2ban
-        - monit
-        - unattended-upgrades
-        - aptitude
+      apt:
+        name:
+          - ufw
+          - rsync
+          - fail2ban
+          - monit
+          - unattended-upgrades
+          - aptitude
+        state: present
+        autoclean: yes
 
     - name: Copy /etc/apt/listchanges.conf
       template: src=configs/etc/apt/listchanges.conf.j2
