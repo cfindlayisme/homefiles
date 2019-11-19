@@ -73,7 +73,7 @@
     - name: Allow port 25565 (TCP/UDP) in
       ufw:
           rule: allow
-          port: 25565
+          port: '25565'
 
     #         #
     # Systemd #
