@@ -80,7 +80,7 @@
         size: 4096
 
     - name: Copy certbot cron.daily file
-      template: src=configs/etc/cron.daily/certbot.j2
+      template: src=configs/etc/cron.daily/certbot.www.j2
         dest=/etc/cron.daily/certbot
         backup=no
         owner=0 group=0 mode=0755
