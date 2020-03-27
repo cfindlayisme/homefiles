@@ -1,0 +1,12 @@
+[Unit]
+Description=Server daemon for terraria
+
+[Service]
+Type=forking
+User=terraria
+KillMode=none
+ExecStart=/usr/bin/screen -dmS terraria /bin/bash -c "/terraria/1353/Linux/TerrariaServer.bin.x86_64 -config /terraria/serverconfig.txt"
+ExecStop=/usr/local/bin/terrariad.sh exit
+
+[Install]
+WantedBy=multi-user.target

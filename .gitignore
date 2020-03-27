@@ -1,6 +1,7 @@
 *.swp
 *.swo
 playbooks/configs/root/.ssh/authorized_keys
+playbooks/configs/terraria/serverconfig.txt
 playbooks/retired/configs/etc/dkimkeys/*
 playbooks/retired/configs/etc/opendkim/*
 playbooks/configs/etc/monit/conf.d/alert-preferences.conf

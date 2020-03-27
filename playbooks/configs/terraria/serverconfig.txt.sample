@@ -1,0 +1,8 @@
+maxplayers=8
+world=/terraria/.local/share/Terraria/Worlds/World.wld
+port=7777
+password=
+difficulty=0
+autocreate=1
+worldname=World
+banlist=/terraria/banlist.txt

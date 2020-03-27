@@ -1,0 +1,137 @@
+# Builds a terraria server
+# 
+# Work in progress. Testing in a gcloud g1-small using a small world, 10GB boot drive (non-ssd)
+# TODO: Scaledown, but it uses so little resources as a server anyway that this is low priority
+# TODO: Fix hardcoded terraria version number in this and the service file
+# TODO: Ansible complains about wget, should do the way it wants
+# TODO: Some sort of automated world backup off-server
+#
+# - Run base-config
+# - Edit configs/terraria/serverconfig.txt.sample for password/difficulty, remove .sample from name
+# - Run this
+# - Fin!
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+- hosts: terraria
+  user: root
+
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=86400
+
+    - name: Install depends
+      apt:
+        name:
+          - screen
+          - wget
+          - unzip
+        state: present
+        autoclean: yes
+
+    #               #
+    # Configuration #
+    #               #
+
+    - name: Upload /terraria/serverconfig.txt
+      action: copy src=configs/terraria/serverconfig.txt
+        dest=/terraria/serverconfig.txt
+        owner=0 group=0 mode=0755
+        
+    #           #
+    # Scripting #
+    #           #
+    - name: Upload /usr/local/bin/terrariad.sh
+      action: copy src=configs/usr/local/bin/terrariad.sh
+        dest=/usr/local/bin/terrariad.sh
+        owner=0 group=0 mode=0755
+
+    #                          #
+    # Service account creation #
+    #                          #
+    - name: Create terraria group
+      group:
+        name: terraria
+        state: present
+        gid: '5000'
+
+    - name: Create terraria account
+      user:
+        name: terraria
+        group: terraria
+        state: present
+        home: /terraria
+        password_lock: yes
+        create_home: no
+        shell: /bin/bash
+        uid: '5000'
+
+    - name: Create home directory if needed
+      file:
+        path: /terraria
+        state: directory
+        owner: terraria
+        group: terraria
+        mode: '0775'
+
+    #                #
+    # ufw (firewall) #
+    #                #
+
+    - name: Allow port 7777 in
+      ufw:
+          rule: allow
+          port: '7777'
+
+    #         #
+    # Systemd #
+    #         #
+
+    - name: Copy /etc/systemd/system/terraria.service
+      template: src=configs/etc/systemd/system/terraria.service.j2
+        dest=/etc/systemd/system/terraria.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
+        - enable terraria
+        - restart terraria
+
+    #          #
+    # Download #
+    #          #
+
+    - name: Check if server .zip file exists exists
+      stat:
+        path: /terraria/terraria-server-1353.zip
+      register: zip_result
+
+    - name: Downloading server .zip file if needed
+      command: /usr/bin/wget https://terraria.org/system/dedicated_servers/archives/000/000/032/original/terraria-server-1353.zip -O /terraria/terraria-server-1353.zip
+      when: zip_result.stat.exists == False 
+
+    - name: Extract server .zip file if needed
+      unarchive:
+        src: /terraria/terraria-server-1353.zip
+        dest: /terraria
+        remote_src: yes
+      when: zip_result.stat.exists == False 
+
+    - name: Make server executable
+      file:
+        path: /terraria/1353/Linux/TerrariaServer.bin.x86_64
+        mode: '0755'
+
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: enable terraria
+      systemd:
+        name: terraria
+        enabled: yes
+        masked: no
+
+    - name: restart terraria
+      service: name=terraria state=restarted
