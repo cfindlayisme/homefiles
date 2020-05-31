@@ -103,24 +103,29 @@
 
     - name: Check if server .zip file exists exists
       stat:
-        path: /terraria/terraria-server-1402.zip
+        path: /terraria/terraria-server-1404.zip
       register: zip_result
 
     - name: Downloading server .zip file if needed
-      command: /usr/bin/wget https://terraria.org/system/dedicated_servers/archives/000/000/036/original/terraria-server-1402.zip?1589675482 -O /terraria/terraria-server-1402.zip
+      command: /usr/bin/wget https://terraria.org/system/dedicated_servers/archives/000/000/038/original/terraria-server-1404.zip -O /terraria/terraria-server-1404.zip
       when: zip_result.stat.exists == False 
 
     - name: Extract server .zip file if needed
       unarchive:
-        src: /terraria/terraria-server-1402.zip
+        src: /terraria/terraria-server-1404.zip
         dest: /terraria
         remote_src: yes
       when: zip_result.stat.exists == False 
 
     - name: Make server executable
       file:
-        path: /terraria/1402/Linux/TerrariaServer.bin.x86_64
+        path: /terraria/1404/Linux/TerrariaServer.bin.x86_64
         mode: '0755'
+      notify:
+        - reload systemd
+        - enable terraria
+        - restart terraria
+
 
   handlers:
     - name: reload systemd
