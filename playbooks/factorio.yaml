@@ -14,6 +14,7 @@
       apt:
         name:
           - screen
+          - wget
         state: present
         autoclean: yes
         
@@ -25,14 +26,8 @@
         dest=/usr/local/bin/factorio-attach.sh
         owner=0 group=0 mode=0755
 
-    - name: Upload /usr/local/bin/factorio-scaledown.sh
-      action: copy src=configs/usr/local/bin/factorio-scaledown.sh
-        dest=/usr/local/bin/factorio-scaledown.sh
-        owner=0 group=0 mode=0755
       notify:
         - reload systemd
-        - enable factorio-scaledown
-        - restart factorio-scaledown
 
     #                          #
     # Service account creation #
@@ -77,21 +72,31 @@
         - enable factorio
         - restart factorio
 
-    - name: Copy /etc/systemd/system/factorio-scaledown.service
-      template: src=configs/etc/systemd/system/factorio-scaledown.service.j2
-        dest=/etc/systemd/system/factorio-scaledown.service
-        backup=no
-        owner=0 group=0 mode=0644
       notify:
         - reload systemd
-        - enable factorio-scaledown
-        - restart factorio-scaledown
 
     #          #
     # Download #
     #          #
 
-    #TODO
+    - name: Check if server .tar.xz file exists exists
+      stat:
+        path: /factorio/factorio_headless_x64_0.17.79.tar.xz
+      register: zip_result
+
+    - name: Downloading server .zip file if needed
+      command: /usr/bin/wget https://factorio.com/get-download/0.17.79/headless/linux64 -O /factorio/0.17.79.tar.xz
+      when: zip_result.stat.exists == False 
+
+    - name: Extract server .zip file if needed
+      unarchive:
+        src: /factorio/0.17.79.tar.xz
+        dest: /factorio
+        remote_src: yes
+      when: zip_result.stat.exists == False 
+      notify:
+        - enable factorio
+        - restart factorio
 
   handlers:
     - name: reload systemd
@@ -106,12 +111,3 @@
 
     - name: restart factorio
       service: name=factorio state=restarted
-
-    - name: enable factorio-scaledown
-      systemd:
-        name: factorio-scaledown
-        enabled: yes
-        masked: no
-
-    - name: restart factorio-scaledown
-      service: name=factorio-scaledown state=restarted
