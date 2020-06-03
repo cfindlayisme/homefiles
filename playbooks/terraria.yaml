@@ -126,7 +126,6 @@
         path: /terraria/1404/Linux/TerrariaServer.bin.x86_64
         mode: '0755'
       notify:
-        - reload systemd
         - enable terraria
         - restart terraria
 
