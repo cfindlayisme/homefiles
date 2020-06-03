@@ -1,4 +1,4 @@
-# Builds a terraria server
+# Builds a terraria server, version 1.404
 # 
 # Work in progress. Testing in gcloud with a 10gb boot drive (non-ssd)
 # - f1-micro: Too little RAM, won't launch. 0.2 vCPU would likely be an issue
