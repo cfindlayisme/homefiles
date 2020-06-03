@@ -1,6 +1,10 @@
 # Builds a terraria server
 # 
-# Work in progress. Testing in a gcloud g1-small using a small world, 10GB boot drive (non-ssd)
+# Work in progress. Testing in gcloud with a 10gb boot drive (non-ssd)
+# - f1-micro: Too little RAM, won't launch. 0.2 vCPU would likely be an issue
+# - g1-small: Works fine for a small world most of the time, large events can cause some slight lag due to 0.5 vCPU
+# - n1-standard: To be tested
+#
 # TODO: Scaledown, but it uses so little resources as a server anyway that this is low priority
 # TODO: Fix hardcoded terraria version number in this and the service file
 # TODO: Ansible complains about wget, should do the way it wants
