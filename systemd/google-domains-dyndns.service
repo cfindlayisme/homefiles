@@ -1,0 +1,24 @@
+# Simple dyndns updater on boot for Google Domains
+# Uses a "Synthetic Record" on the DNS management page, which gives you a random user
+# and password to change below.
+#
+# Setup because I'm too cheap to pay the upcoming (in 2020) IP costs per hour when idle
+# on gcloud. gcloud DNS is a solution for another day.
+#
+# See https://support.google.com/domains/answer/6147083?hl=en for details
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+[Unit]
+Description=Google Domains DynDNS Auto-update
+After=network.target
+
+[Service]
+User=nobody
+Group=nobody
+Type=forking
+ExecStart=/usr/bin/curl "https://user : password@domains.google.com/nic/update?hostname=domain"
+ExecStop=/usr/bin/curl "https://user : password@domains.google.com/nic/update?hostname=domain&offline=yes"
+
+[Install]
+WantedBy=multi-user.target
