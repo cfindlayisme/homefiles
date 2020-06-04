@@ -14,11 +14,10 @@ Description=Google Domains DynDNS Auto-update
 After=network.target
 
 [Service]
-User=nobody
-Group=nobody
-Type=forking
-ExecStart=/usr/bin/curl "https://user : password@domains.google.com/nic/update?hostname=domain"
-ExecStop=/usr/bin/curl "https://user : password@domains.google.com/nic/update?hostname=domain&offline=yes"
+Type=oneshot
+ExecStart=/bin/sh -c "/usr/bin/curl \"https://user:password@domains.google.com/nic/update?hostname=hostname\""
+RemainAfterExit=true
+ExecStop=/bin/sh -c "/usr/bin/curl \"https://user:password@domains.google.com/nic/update?hostname=hostname&offline=yes\""
 
 [Install]
 WantedBy=multi-user.target
