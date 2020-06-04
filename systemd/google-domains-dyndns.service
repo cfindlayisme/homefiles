@@ -15,9 +15,9 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c "/usr/bin/curl \"https://user:password@domains.google.com/nic/update?hostname=hostname\""
+ExecStart=/bin/sh -c "/usr/bin/curl -4 \"https://user:password@domains.google.com/nic/update?hostname=hostname\""
 RemainAfterExit=true
-ExecStop=/bin/sh -c "/usr/bin/curl \"https://user:password@domains.google.com/nic/update?hostname=hostname&offline=yes\""
+ExecStop=/bin/sh -c "/usr/bin/curl -4 \"https://user:password@domains.google.com/nic/update?hostname=hostname&offline=yes\""
 
 [Install]
 WantedBy=multi-user.target
