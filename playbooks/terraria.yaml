@@ -49,6 +49,15 @@
         dest=/usr/local/bin/terrariad.sh
         owner=0 group=0 mode=0755
 
+    - name: Upload /usr/local/bin/terraria-scaledown.sh
+      action: copy src=configs/usr/local/bin/terraria-scaledown.sh
+        dest=/usr/local/bin/terraria-scaledown.sh
+        owner=0 group=0 mode=0755
+      notify:
+        - reload systemd
+        - enable terraria-scaledown
+        - restart terraria-scaledown
+
     #                          #
     # Service account creation #
     #                          #
@@ -100,6 +109,16 @@
         - enable terraria
         - restart terraria
 
+    - name: Copy /etc/systemd/system/terraria-scaledown.service
+      template: src=configs/etc/systemd/system/terraria-scaledown.service.j2
+        dest=/etc/systemd/system/terraria-scaledown.service
+        backup=no
+        owner=0 group=0 mode=0644
+      notify:
+        - reload systemd
+        - enable terraria-scaledown
+        - restart terraria-scaledown
+
     #          #
     # Download #
     #          #
@@ -142,3 +161,12 @@
 
     - name: restart terraria
       service: name=terraria state=restarted
+
+    - name: enable terraria-scaledown
+      systemd:
+        name: terraria-scaledown
+        enabled: yes
+        masked: no
+
+    - name: restart terraria-scaledown
+      service: name=terraria-scaledown state=restarted

@@ -1,0 +1,18 @@
+# Runs the scaledown script at boot
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+[Unit]
+Description=Terraria scale-down service
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+
+ExecStart=/usr/local/bin/terraria-scaledown.sh
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
