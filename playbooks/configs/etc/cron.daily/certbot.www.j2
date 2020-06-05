@@ -1,3 +1,8 @@
 #!/bin/bash
+#
+# Renews certificates with certbot quietly and then reloads nginx so they can be applied
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
 /usr/bin/certbot renew --quiet
 /usr/sbin/service nginx reload
