@@ -17,13 +17,13 @@
           - wget
         state: present
         autoclean: yes
-        
+     
     #           #
     # Scripting #
     #           #
-    - name: Upload /usr/local/bin/factorio-attach.sh
-      action: copy src=configs/usr/local/bin/factorio-attach.sh
-        dest=/usr/local/bin/factorio-attach.sh
+    - name: Upload /usr/local/bin/factoriod.sh
+      action: copy src=configs/usr/local/bin/factoriod.sh
+        dest=/usr/local/bin/factoriod.sh
         owner=0 group=0 mode=0755
 
       notify:
@@ -36,7 +36,7 @@
       group:
         name: factorio
         state: present
-        gid: 5000
+        gid: '5000'
 
     - name: Create factorio account
       user:
@@ -47,7 +47,15 @@
         password_lock: yes
         create_home: no
         shell: /bin/bash
-        uid: 5000
+        uid: '5000'
+
+    - name: Create home directory if needed
+      file:
+        path: /factorio
+        state: directory
+        owner: factorio
+        group: factorio
+        mode: '0775'
 
     #                #
     # ufw (firewall) #
@@ -56,7 +64,8 @@
     - name: Allow port 34197 (UDP) in
       ufw:
           rule: allow
-          port: 34197
+          port: '34197'
+          proto: udp
 
     #         #
     # Systemd #
@@ -81,22 +90,41 @@
 
     - name: Check if server .tar.xz file exists exists
       stat:
-        path: /factorio/factorio_headless_x64_0.17.79.tar.xz
+        path: /factorio/0.17.79.tar.xz
       register: zip_result
 
-    - name: Downloading server .zip file if needed
+    - name: Downloading server .tar.xz file if needed
       command: /usr/bin/wget https://factorio.com/get-download/0.17.79/headless/linux64 -O /factorio/0.17.79.tar.xz
       when: zip_result.stat.exists == False 
 
-    - name: Extract server .zip file if needed
+    - name: Create version directory if needed
+      file:
+        path: /factorio/0.17.79
+        state: directory
+        owner: factorio
+        group: factorio
+        mode: '0775'
+
+    - name: Extract server .tar.xz file if needed
       unarchive:
         src: /factorio/0.17.79.tar.xz
-        dest: /factorio
+        dest: /factorio/0.17.79
+        owner: factorio
+        group: factorio
         remote_src: yes
       when: zip_result.stat.exists == False 
       notify:
         - enable factorio
         - restart factorio
+
+    #               #
+    # Configuration #
+    #               #
+
+    - name: Upload /factorio/server-settings.json
+      action: copy src=configs/factorio/server-settings.json
+        dest=/factorio/server-settings.json
+        owner=0 group=0 mode=0755
 
   handlers:
     - name: reload systemd

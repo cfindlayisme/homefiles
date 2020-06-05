@@ -1,14 +1,16 @@
+# Starts factorio server
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
 [Unit]
-Description=FactorioServer
-After=network.target
+Description=Server daemon for factorio
+
 [Service]
-WorkingDirectory=/srv/factorio
+Type=forking
 User=factorio
-Group=factorio
-Type=simple
-ExecStart=/srv/factorio/current/bin/x64/factorio --server-settings /srv/factorio/server-settings.json --start-server /srv/factorio/world.zip
-RestartSec=15
-Restart=always
-KillSignal=SIGINT
+KillMode=none
+ExecStart=/usr/bin/screen -dmS factorio /bin/bash -c "/factorio/0.17.79/factorio/bin/x64/factorio --server-settings /factorio/server-settings.json --start-server /factorio/world.zip"
+ExecStop=/usr/local/bin/factoriod.sh /quit
+
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.targets
