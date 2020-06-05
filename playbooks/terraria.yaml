@@ -5,7 +5,6 @@
 # - g1-small: Works fine for a small world most of the time, large events can cause some slight lag due to 0.5 vCPU
 # - n1-standard: To be tested
 #
-# TODO: Scaledown, but it uses so little resources as a server anyway that this is low priority
 # TODO: Ansible complains about wget, should do the way it wants
 # TODO: Some sort of automated world backup off-server
 #
