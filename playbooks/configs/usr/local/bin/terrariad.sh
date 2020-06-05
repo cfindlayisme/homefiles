@@ -1,9 +1,9 @@
 #!/bin/bash
 #
+# Provides an easy way to inject stuff into terraria, or to attach to the screen
+#
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
-#!/usr/bin/env bash
-
 send="`printf \"$*\r\"`"
 attach='script /dev/null -qc "screen -r terraria"'
 inject="screen -S terraria -X stuff $send"
