@@ -6,7 +6,6 @@
 # - n1-standard: To be tested
 #
 # TODO: Scaledown, but it uses so little resources as a server anyway that this is low priority
-# TODO: Fix hardcoded terraria version number in this and the service file
 # TODO: Ansible complains about wget, should do the way it wants
 # TODO: Some sort of automated world backup off-server
 #
