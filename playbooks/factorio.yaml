@@ -4,6 +4,9 @@
 # - n1-standard: Testing, seems a bit overpowered at the start, but very smooth and 0.033$/hr at the time of
 #   writing this so costs pennies per month to play
 #
+# TODO: Still issues with starting factorio service automatically at boot
+# TODO: Scaledown
+#
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
 - hosts: factorio
