@@ -96,16 +96,16 @@
 
     - name: Check if server .tar.xz file exists exists
       stat:
-        path: /factorio/0.17.79.tar.xz
+        path: /factorio/1.0.0.tar.xz
       register: zip_result
 
     - name: Downloading server .tar.xz file if needed
-      command: /usr/bin/wget https://factorio.com/get-download/0.17.79/headless/linux64 -O /factorio/0.17.79.tar.xz
+      command: /usr/bin/wget https://factorio.com/get-download/1.0.0/headless/linux64 -O /factorio/1.0.0.tar.xz
       when: zip_result.stat.exists == False 
 
     - name: Create version directory if needed
       file:
-        path: /factorio/0.17.79
+        path: /factorio/1.0.0
         state: directory
         owner: factorio
         group: factorio
@@ -113,8 +113,8 @@
 
     - name: Extract server .tar.xz file if needed
       unarchive:
-        src: /factorio/0.17.79.tar.xz
-        dest: /factorio/0.17.79
+        src: /factorio/1.0.0.tar.xz
+        dest: /factorio/1.0.0
         owner: factorio
         group: factorio
         remote_src: yes
