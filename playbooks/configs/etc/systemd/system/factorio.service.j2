@@ -10,7 +10,7 @@ After=network.target
 Type=forking
 User=factorio
 KillMode=none
-ExecStart=/usr/bin/screen -dmS factorio /bin/bash -c "/factorio/1.0.0/factorio/bin/x64/factorio --server-settings /factorio/server-settings.json --start-server /factorio/world.zip"
+ExecStart=/usr/bin/screen -dmS factorio /bin/bash -c "/factorio/1.0.0/factorio/bin/x64/factorio --server-settings /factorio/config/server-settings.json --start-server /factorio/config/world.zip"
 ExecStop=/usr/local/bin/factoriod.sh /quit
 
 [Install]

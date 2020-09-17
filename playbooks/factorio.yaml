@@ -127,9 +127,17 @@
     # Configuration #
     #               #
 
-    - name: Upload /factorio/server-settings.json
-      action: copy src=configs/factorio/server-settings.json
-        dest=/factorio/server-settings.json
+    - name: Create config directory
+      file:
+        path: /factorio/config
+        state: directory
+        owner: factorio
+        group: factorio
+        mode: '0775'
+
+    - name: Upload /factorio/config/server-settings.json
+      action: copy src=configs/factorio/config/server-settings.json
+        dest=/factorio/config/server-settings.json
         owner=0 group=0 mode=0755
 
   handlers:
