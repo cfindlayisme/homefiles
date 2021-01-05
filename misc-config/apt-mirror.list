@@ -1,0 +1,138 @@
+#
+# This is my mirror setup for my home network, in order to save some bandwidth.
+# apt-mirror runs on off hours so I don't clog up my network bandwidth, then during the day I can
+# install/update packages as I please without worrying
+#
+# Since this is just a mirror config nothing really private is put in here
+#
+# Another note: This takes up a lot of space
+#
+# Author: Chuck Findlay <chuck@findlayis.me>
+# License: LGPL v3.0
+
+############# config ##################
+#
+set base_path    /Archive1/apt-mirrors
+set mirror_path  $base_path/mirror
+set skel_path    $base_path/skel
+set var_path     $base_path/var
+# set cleanscript $var_path/clean.sh
+# set defaultarch  <running host architecture>
+# set postmirror_script $var_path/postmirror.sh
+# set run_postmirror 0
+set nthreads     20
+set _tilde 0
+#
+############# end config ##############
+
+# Debian 9 Stretch
+deb-amd64 http://ftp.ca.debian.org/debian stretch main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian stretch-updates main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian stretch-backports main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian stretch main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian stretch-updates main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian stretch-backports main contrib non-free
+deb-src http://ftp.ca.debian.org/debian stretch main contrib non-free
+deb-src http://ftp.ca.debian.org/debian stretch-updates main contrib non-free
+deb-src http://ftp.ca.debian.org/debian stretch-backports main contrib non-free
+
+# Debian 10 Buster
+deb-amd64 http://ftp.ca.debian.org/debian buster main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian buster-updates main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian buster-backports main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian buster main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian buster-updates main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian buster-backports main contrib non-free
+deb-src http://ftp.ca.debian.org/debian buster main contrib non-free
+deb-src http://ftp.ca.debian.org/debian buster-updates main contrib non-free
+deb-src http://ftp.ca.debian.org/debian buster-backports main contrib non-free
+
+# Ubuntu focal
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+
+# Ubuntu groovy
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ groovy main restricted universe multiverse
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ groovy-backports main restricted universe multiverse
+deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ groovy-updates main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ groovy main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ groovy-backports main restricted universe multiverse
+deb-i386 http://ca.archive.ubuntu.com/ubuntu/ groovy-updates main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ groovy main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ groovy-backports main restricted universe multiverse
+deb-src http://ca.archive.ubuntu.com/ubuntu/ groovy-updates main restricted universe multiverse
+
+# Pop! OS focal
+deb-amd64 http://apt.pop-os.org/proprietary focal main
+deb-all http://apt.pop-os.org/proprietary focal main
+
+# Pop! OS groovy
+deb-amd64 http://apt.pop-os.org/proprietary groovy main
+deb-all http://apt.pop-os.org/proprietary groovy main
+
+# google-chrome stable
+deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+
+# vscode stable
+deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main
+
+# google-cloud-sdk stable
+deb https://packages.cloud.google.com/apt cloud-sdk main
+
+# google-earth stable
+deb-amd64 http://dl.google.com/linux/earth/deb stable main
+
+# Github cli focal
+deb-amd64 https://cli.github.com/packages focal main
+deb-i386 https://cli.github.com/packages focal main
+deb-amd64 https://cli.github.com/packages buster main
+deb-i386 https://cli.github.com/packages buster main
+
+# docker
+deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+deb [arch=amd64] https://download.docker.com/linux/ubuntu groovy stable
+deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+
+# nginx
+deb-amd64 http://nginx.org/packages/debian stretch nginx
+deb-amd64 http://nginx.org/packages/debian buster nginx
+deb-amd64 http://nginx.org/packages/ubuntu focal nginx
+deb-amd64 http://nginx.org/packages/ubuntu groovy nginx
+
+# Microsoft teams
+deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main
+
+# Lutris focal
+deb-i386 http://ppa.launchpad.net/lutris-team/lutris/ubuntu focal main
+deb-amd64 http://ppa.launchpad.net/lutris-team/lutris/ubuntu focal main
+
+# google-cloud-sdk
+deb-amd64 https://packages.cloud.google.com/apt cloud-sdk main
+deb-i386 https://packages.cloud.google.com/apt cloud-sdk main
+
+# Remmina
+deb-amd64 http://ppa.launchpad.net/remmina-ppa-team/remmina-next/ubuntu focal main
+deb-i386 http://ppa.launchpad.net/remmina-ppa-team/remmina-next/ubuntu focal main
+deb-amd64 http://ppa.launchpad.net/remmina-ppa-team/remmina-next/ubuntu groovy main
+deb-i386 http://ppa.launchpad.net/remmina-ppa-team/remmina-next/ubuntu groovy main
+
+# webupd8
+deb-amd64 http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu focal main
+deb-i386 http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu focal main
+
+# system74-pop-ppa
+deb-amd64 http://ppa.launchpad.net/system76/pop/ubuntu focal main
+deb-i386 http://ppa.launchpad.net/system76/pop/ubuntu focal main
+deb-amd64 http://ppa.launchpad.net/system76/pop/ubuntu groovy main
+deb-i386 http://ppa.launchpad.net/system76/pop/ubuntu groovy main
+
+# virtualbox
+deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian focal contrib
