@@ -136,3 +136,6 @@ deb-i386 http://ppa.launchpad.net/system76/pop/ubuntu groovy main
 
 # virtualbox
 deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian focal contrib
+
+# openrazer
+deb-amd64 http://ppa.launchpad.net/openrazer/stable/ubuntu groovy main
