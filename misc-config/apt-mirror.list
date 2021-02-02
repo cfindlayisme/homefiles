@@ -1,11 +1,11 @@
 #
-# This is my mirror setup for my home network, in order to save some bandwidth.
 # apt-mirror runs on off hours so I don't clog up my network bandwidth, then during the day I can
-# install/update packages as I please without worrying
+# install/update packages as I please without worrying. Useful for slower/rural connections.
 #
-# Since this is just a mirror config nothing really private is put in here
+# At the moment I don't bother with cleaning up old stuff in the mirror as HD space is pretty cheap
+# for non-raid setups.
 #
-# Another note: This takes up a lot of space
+# Since this is just a mirror config nothing really private is put in here.
 #
 # Author: Chuck Findlay <chuck@findlayis.me>
 # License: LGPL v3.0
@@ -46,6 +46,17 @@ deb-i386 http://ftp.ca.debian.org/debian buster-backports main contrib non-free
 deb-src http://ftp.ca.debian.org/debian buster main contrib non-free
 deb-src http://ftp.ca.debian.org/debian buster-updates main contrib non-free
 deb-src http://ftp.ca.debian.org/debian buster-backports main contrib non-free
+
+# Debian 11 Bullseye
+deb-amd64 http://ftp.ca.debian.org/debian bullseye main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian bullseye-updates main contrib non-free
+deb-amd64 http://ftp.ca.debian.org/debian bullseye-backports main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian bullseye main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian bullseye-updates main contrib non-free
+deb-i386 http://ftp.ca.debian.org/debian bullseye-backports main contrib non-free
+deb-src http://ftp.ca.debian.org/debian bullseye main contrib non-free
+deb-src http://ftp.ca.debian.org/debian bullseye-updates main contrib non-free
+deb-src http://ftp.ca.debian.org/debian bullseye-backports main contrib non-free
 
 # Ubuntu focal
 deb-amd64 http://ca.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
