@@ -18,7 +18,6 @@
           - ufw
           - rsync
           - fail2ban
-          - monit
           - unattended-upgrades
           - aptitude
         state: present
@@ -72,30 +71,6 @@
         backup=no
         owner=0 group=0 mode=0644
 
-    - name: Upload /etc/monit/conf.d/alert-preferences.conf
-      template: src=configs/etc/monit/conf.d/alert-preferences.conf.j2
-        dest=/etc/monit/conf.d/alert-preferences.conf
-        backup=no
-        owner=0 group=0 mode=0644
-      notify:
-        - restart monit
-
-    - name: Upload /etc/monit/conf.d/host-watch.conf
-      action: copy src=configs/etc/monit/conf.d/host-watch.conf
-        dest=/etc/monit/conf.d/host-watch.conf
-        owner=0 group=0 mode=644
-      notify:
-        - restart monit
-
-    - name: Upload /etc/monit/conf.d/sshd.conf
-      action: copy src=configs/etc/monit/conf.d/sshd.conf
-        dest=/etc/monit/conf.d/sshd.conf
-        owner=0 group=0 mode=644
-      notify:
-        - restart monit
-
   handlers:
     - name: restart sshd
       service: name=sshd state=restarted
-    - name: restart monit
-      service: name=monit state=restarted
