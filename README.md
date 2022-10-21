@@ -10,7 +10,9 @@ Technical documentation I just toss into here for future reference
 ## playbooks/*
 My Ansible playbooks to configure all my various servers. I start with base-config.yaml then go from there.
 
-I use the latest version of Debian for each one in general, and usually provision a server on Google Cloud Services
+I use the latest version of Debian for each one in general, and usually provision a server on Google Cloud Services.
+
+I've generally begun retiring these and switching to micro-services type of approach with my servers - makes it easier to manage and allows for an automatic CI/CD style pipeline
 
 ## powershell/*
 Powershell scripts I use from time to time
