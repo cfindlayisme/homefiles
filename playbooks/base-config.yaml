@@ -15,7 +15,6 @@
     - name: Install required programs
       apt:
         name:
-          - ufw
           - rsync
           - fail2ban
           - unattended-upgrades
@@ -28,18 +27,6 @@
         dest=/etc/apt/listchanges.conf
         backup=no
         owner=0 group=0 mode=0644
-
-    - name: Enable firewall
-      ufw:
-        state: enabled
-      when: no_ufw_hosts not in inventory_hostname
-
-    - name: Allow SSH on port 22/tcp
-      ufw:
-          rule: allow
-          port: '22'
-          proto: tcp
-      when: no_ufw_hosts not in inventory_hostname
 
     - name: Install /etc/ssh/sshd_config
       template: src=configs/etc/ssh/sshd_config.j2
