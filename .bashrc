@@ -2,7 +2,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=~bin:$PATH
+export PATH=~bin:~/go/bin:$PATH
+
+export GOPATH=~/go
 
 # Makes GPG work properly for things like git on Android termux
 export GPG_TTY=$(tty)
