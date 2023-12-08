@@ -1,0 +1,6 @@
+set mouse
+set nowrap
+include "~/.nano/syntax/Dockerfile.nanorc"
+include "~/.nano/syntax/bash.nanorc"
+include "~/.nano/syntax/yaml.nanorc"
+include "~/.nano/syntax/js.nanorc"
